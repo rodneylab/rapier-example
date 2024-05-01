@@ -110,8 +110,10 @@ fn create_physics_for_ball(
     collider_set: &mut ColliderSet,
     normal_distribution: &mut StdRng,
 ) -> RigidBodyHandle {
-    let x_velocity = normal_distribution.sample(Standard);
-    let linear_velocity = vector![x_velocity, 1.0];
+    // Standard generates values in the [0,1) range
+    let pseudo_random_value: f32 = normal_distribution.sample(Standard);
+    let x_velocity: f32 = (2.0 * pseudo_random_value) - 1.0;
+    let linear_velocity = vector![-1.0 * x_velocity, 1.0];
     let rigid_body = RigidBodyBuilder::dynamic()
         .translation(ball.position)
         .linvel(linear_velocity)
