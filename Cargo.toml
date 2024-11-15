@@ -3,7 +3,7 @@ name = "rapier-example"
 version = "0.1.0"
 edition = "2021"
 license = "BSD-3-Clause"
-repository = "https://github.com/rapier-example"
+repository = "https://github.com/rodneylab/rapier-example"
 # macroquad 0.3.26 requires MSRV 1.73
 rust-version = "1.73"
 description = "Rapier Physics with Macroquad 🗡️ building a basic game physics simulation in Rust using rapier physics and Macroquad for rendering 🖥️"
