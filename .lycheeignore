@@ -1,5 +1,5 @@
-^\./images/rodneylab-github-rapier-example.png"
-^\./images/hello-world-example.gif"
+^\./images/rodneylab-github-rapier-example.png
+^\./images/hello-world-example.gif
 ^\./sqlite\.db
 ^file:\/\/.*
 ^sqlite:\/\/.*
