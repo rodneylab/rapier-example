@@ -9,7 +9,7 @@ use macroquad::{
     window::{clear_background, next_frame, Conf},
 };
 use rand::{rngs::StdRng, Rng, SeedableRng};
-use rand_distr::Standard;
+use rand_distr::StandardUniform;
 use rapier2d::{
     dynamics::{
         CCDSolver, ImpulseJointSet, IntegrationParameters, IslandManager, MultibodyJointSet,
@@ -112,7 +112,7 @@ fn create_physics_for_ball(
     normal_distribution: &mut StdRng,
 ) -> RigidBodyHandle {
     // Standard generates values in the [0,1) range
-    let pseudo_random_value: f32 = normal_distribution.sample(Standard);
+    let pseudo_random_value: f32 = normal_distribution.sample(StandardUniform);
     let x_velocity: f32 = (2.0 * pseudo_random_value) - 1.0;
     let linear_velocity = vector![-1.0 * x_velocity, 1.0];
     let rigid_body = RigidBodyBuilder::dynamic()
@@ -255,7 +255,7 @@ async fn main() {
     create_side_walls(gap, &mut collider_set);
 
     // Create ball
-    let mut normal_distribution = StdRng::from_entropy();
+    let mut normal_distribution = StdRng::from_os_rng();
     let mut new_ball = Ball::default();
     let ball_body_handle = create_physics_for_ball(
         &new_ball,
@@ -337,7 +337,7 @@ async fn main() {
                 ) = collision_event
                 {
                     paused = true;
-                };
+                }
             }
         }
         next_frame().await;
