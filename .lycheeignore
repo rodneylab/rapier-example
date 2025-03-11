@@ -1,0 +1,12 @@
+^\./images/rodneylab-github-rapier-example.png"
+^\./images/hello-world-example.gif"
+^\./sqlite\.db
+^file:\/\/.*
+^sqlite:\/\/.*
+http://localhost/
+http://localhost:16686/search
+http://localhost:8000/
+http://localhost:8001/metrics
+http://localhost:9093/
+http://loki:3100/
+https://fonts\.googleapis\.com/css
