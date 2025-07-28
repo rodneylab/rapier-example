@@ -1,8 +1,8 @@
 use macroquad::{
     color::Color,
-    input::{is_key_released, KeyCode},
+    input::{KeyCode, is_key_released},
     shapes::draw_circle,
-    window::{clear_background, next_frame, Conf},
+    window::{Conf, clear_background, next_frame},
 };
 use rapier2d::{
     dynamics::{
@@ -10,7 +10,7 @@ use rapier2d::{
         RigidBodyBuilder, RigidBodySet,
     },
     geometry::{BroadPhaseMultiSap, ColliderBuilder, ColliderSet, NarrowPhase},
-    na::{vector, Vector2},
+    na::{Vector2, vector},
     pipeline::{PhysicsPipeline, QueryPipeline},
     prelude::nalgebra,
 };

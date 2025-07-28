@@ -2,13 +2,13 @@
 
 use macroquad::{
     color::Color,
-    input::{is_key_released, KeyCode},
+    input::{KeyCode, is_key_released},
     miniquad::date,
     rand::{self as macroquad_rand, srand},
     shapes::draw_circle,
-    window::{clear_background, next_frame, Conf},
+    window::{Conf, clear_background, next_frame},
 };
-use rand::{rngs::StdRng, Rng, SeedableRng};
+use rand::{Rng, SeedableRng, rngs::StdRng};
 use rand_distr::StandardUniform;
 use rapier2d::{
     dynamics::{
@@ -20,7 +20,7 @@ use rapier2d::{
         NarrowPhase,
     },
     math::Isometry,
-    na::{vector, DVector, Vector2},
+    na::{DVector, Vector2, vector},
     pipeline::{ActiveEvents, ChannelEventCollector, PhysicsPipeline, QueryPipeline},
     prelude::nalgebra,
 };
