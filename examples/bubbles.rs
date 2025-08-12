@@ -1,5 +1,7 @@
 #![warn(clippy::all, clippy::pedantic)]
 
+use std::sync::mpsc;
+
 use macroquad::{
     color::Color,
     input::{KeyCode, is_key_released},
@@ -16,12 +18,12 @@ use rapier2d::{
         RigidBodyBuilder, RigidBodyHandle, RigidBodySet,
     },
     geometry::{
-        BroadPhaseMultiSap, ColliderBuilder, ColliderSet, CollisionEvent, CollisionEventFlags,
+        ColliderBuilder, ColliderSet, CollisionEvent, CollisionEventFlags, DefaultBroadPhase,
         NarrowPhase,
     },
     math::Isometry,
     na::{DVector, Vector2, vector},
-    pipeline::{ActiveEvents, ChannelEventCollector, PhysicsPipeline, QueryPipeline},
+    pipeline::{ActiveEvents, ChannelEventCollector, PhysicsPipeline},
     prelude::nalgebra,
 };
 
@@ -273,15 +275,14 @@ async fn main() {
     let integration_parameters = IntegrationParameters::default();
     let mut physics_pipeline = PhysicsPipeline::new();
     let mut island_manager = IslandManager::new();
-    let mut broad_phase = BroadPhaseMultiSap::new();
+    let mut broad_phase = DefaultBroadPhase::new();
     let mut narrow_phase = NarrowPhase::new();
     let mut impulse_joint_set = ImpulseJointSet::new();
     let mut multibody_joint_set = MultibodyJointSet::new();
     let mut ccd_solver = CCDSolver::new();
-    let mut query_pipeline = QueryPipeline::new();
     let physics_hooks = ();
-    let (collision_send, collision_recv) = crossbeam::channel::unbounded();
-    let (contact_force_send, _contact_force_recv) = crossbeam::channel::unbounded();
+    let (collision_send, collision_recv) = mpsc::channel();
+    let (contact_force_send, _contact_force_recv) = mpsc::channel();
     let event_handler = ChannelEventCollector::new(collision_send, contact_force_send);
 
     let mut paused = false;
@@ -307,7 +308,7 @@ async fn main() {
                 &mut impulse_joint_set,
                 &mut multibody_joint_set,
                 &mut ccd_solver,
-                Some(&mut query_pipeline),
+                // Some(&mut query_pipeline),
                 &physics_hooks,
                 &event_handler,
             );

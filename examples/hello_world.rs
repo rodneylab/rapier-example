@@ -9,9 +9,9 @@ use rapier2d::{
         CCDSolver, ImpulseJointSet, IntegrationParameters, IslandManager, MultibodyJointSet,
         RigidBodyBuilder, RigidBodySet,
     },
-    geometry::{BroadPhaseMultiSap, ColliderBuilder, ColliderSet, NarrowPhase},
+    geometry::{ColliderBuilder, ColliderSet, DefaultBroadPhase, NarrowPhase},
     na::{Vector2, vector},
-    pipeline::{PhysicsPipeline, QueryPipeline},
+    pipeline::PhysicsPipeline,
     prelude::nalgebra,
 };
 
@@ -96,12 +96,11 @@ async fn main() {
     let integration_parameters = IntegrationParameters::default();
     let mut physics_pipeline = PhysicsPipeline::new();
     let mut island_manager = IslandManager::new();
-    let mut broad_phase = BroadPhaseMultiSap::new();
+    let mut broad_phase = DefaultBroadPhase::new();
     let mut narrow_phase = NarrowPhase::new();
     let mut impulse_joint_set = ImpulseJointSet::new();
     let mut multibody_joint_set = MultibodyJointSet::new();
     let mut ccd_solver = CCDSolver::new();
-    let mut query_pipeline = QueryPipeline::new();
     let physics_hooks = ();
     let event_handler = ();
 
@@ -131,7 +130,6 @@ async fn main() {
             &mut impulse_joint_set,
             &mut multibody_joint_set,
             &mut ccd_solver,
-            Some(&mut query_pipeline),
             &physics_hooks,
             &event_handler,
         );
