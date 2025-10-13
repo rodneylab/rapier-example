@@ -116,7 +116,7 @@ fn create_physics_for_ball(
     // Standard generates values in the [0,1) range
     let pseudo_random_value: f32 = normal_distribution.sample(StandardUniform);
     let x_velocity: f32 = (2.0 * pseudo_random_value) - 1.0;
-    let linear_velocity = vector![-1.0 * x_velocity, 1.0];
+    let linear_velocity = vector![-x_velocity, 1.0];
     let rigid_body = RigidBodyBuilder::dynamic()
         .translation(ball.position)
         .linvel(linear_velocity)
@@ -141,7 +141,7 @@ fn create_ceiling(ceiling_width: f32, max_balls: u32, collider_set: &mut Collide
         ColliderBuilder::heightfield(heights, vector![ceiling_width, collider_half_thickness])
             .translation(vector![
                 0.5 * WINDOW_WIDTH / PHYSICS_SCALE,
-                -1.0 * collider_half_thickness
+                -collider_half_thickness
             ])
             .friction(1.0)
             .restitution(0.0)
@@ -317,7 +317,7 @@ async fn main() {
             update_balls(&mut balls, &rigid_body_set);
 
             // wait for existing balls to settle before spawning a new one
-            if island_manager.active_dynamic_bodies().is_empty() {
+            if island_manager.active_bodies().is_empty() {
                 let mut new_ball = Ball::default();
                 let ball_body_handle = create_physics_for_ball(
                     &new_ball,
